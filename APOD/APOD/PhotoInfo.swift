@@ -22,14 +22,14 @@ struct PhotoInfo: Codable {
     
     init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: Keys.self)
-        print("valueContainer: ", valueContainer)
         self.title = try valueContainer.decode(String.self, forKey: Keys.title)
-        print("title: ", self.title)
         self.description = try valueContainer.decode(String.self, forKey: Keys.description)
-        print("description :", self.description)
         self.url = try valueContainer.decode(URL.self, forKey: Keys.url)
-        print("url: ", self.url)
         self.copyright = try? valueContainer.decode(String.self, forKey: Keys.copyright)
+        print("valueContainer: ", valueContainer)
+        print("title: ", self.title)
+        print("description :", self.description)
+        print("url: ", self.url)
         print("copyright: ", self.copyright)
     }
 }
