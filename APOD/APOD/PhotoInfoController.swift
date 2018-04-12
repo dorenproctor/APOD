@@ -12,20 +12,23 @@ class PhotoInfoController {
     {
         let baseURL = URL(string: "https://api.nasa.gov/planetary/apod")!
         let query: [String: String] = [
-            "api_key": "DEMO_KEY",
-//            "date": "2011-07-13"
+            "api_key": "IBcypJSuljZUGsIthbZ9X8bF9eQVXQvpebRombt4",
+            "date": "2011-07-13"
         ]
         let url = baseURL.withQueries(query)!
-        print(url)
         let task = URLSession.shared.dataTask(with: url) { (data,
             response, error) in
             let jsonDecoder = JSONDecoder()
-            if let data = data,
-                let photoInfo = try?
+            if let data = data {
+                if let photoInfo = try?
                     jsonDecoder.decode(PhotoInfo.self, from: data) {
                 completion(photoInfo)
+                } else {
+                    print("Data was not serialized.")
+                    completion(nil)
+                }
             } else {
-                print("Either no data was returned, or data was not serialized.")
+                print("No data was returned.")
                 completion(nil)
             }
         }

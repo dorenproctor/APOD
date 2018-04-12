@@ -16,8 +16,6 @@ class ViewController: UIViewController {
     
     func updateUI(with photoInfo: PhotoInfo) {
         guard let url = photoInfo.url.withHTTPS() else { return }
-        print(photoInfo.url)
-        print(url)
         let task = URLSession.shared.dataTask(with: url,
           completionHandler: { (data, response, error) in
             if let data = data,
@@ -26,7 +24,7 @@ class ViewController: UIViewController {
                     self.title = photoInfo.title
                     self.imageView.image = image
                     self.descriptionLabel.text = photoInfo.description
-                    print("title: ", photoInfo.title)
+//                    print("title: ", photoInfo.title)
                     if let copyright = photoInfo.copyright {
                         self.copyrightLabel.text = "Copyright \(copyright)"
                     } else {
@@ -51,11 +49,6 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    @IBAction func buttonPressed(_ sender: UIButton) {
-//        let client: apodClient = apodClient()
-//        print("a", client.getURL())
     }
 }
 
