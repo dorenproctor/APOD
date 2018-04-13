@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var copyrightLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var titleButton: UIButton!
+    @IBOutlet var dateButton: UIButton!
     
     
     let popoverViewController = UIViewController()
@@ -69,6 +71,7 @@ class ViewController: UIViewController {
         let selectedDate: String = dateFormatter.string(from: datePicker.date)
         
         print("Selected value \(selectedDate)")
+        dateButton.setTitle(selectedDate, for: .normal)
         self.dismiss(animated:true, completion: nil)
         let photoInfoController = PhotoInfoController()
         photoInfoController.fetchPhotoInfo(date: selectedDate) { (photoInfo) in
@@ -102,15 +105,16 @@ class ViewController: UIViewController {
             if let data = data,
                 let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-                    self.title = photoInfo.title
+//                    self.title = photoInfo.title
+                    self.titleButton.setTitle(photoInfo.title, for: .normal)
                     self.imageView.image = image
-                    self.descriptionLabel.text = photoInfo.description
+//                    self.descriptionLabel.text = photoInfo.description
 //                    print("title: ", photoInfo.title)
-                    if let copyright = photoInfo.copyright {
-                        self.copyrightLabel.text = "Copyright \(copyright)"
-                    } else {
-                        self.copyrightLabel.isHidden = true
-                    }
+//                    if let copyright = photoInfo.copyright {
+//                        self.copyrightLabel.text = "Copyright \(copyright)"
+//                    } else {
+//                        self.copyrightLabel.isHidden = true
+//                    }
                 }
             }
         })
@@ -120,8 +124,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Date())
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let selectedDate: String = dateFormatter.string(from: Date())
+        dateButton.setTitle(selectedDate, for: .normal)
         let photoInfoController = PhotoInfoController()
-        photoInfoController.fetchPhotoInfo(date: "2012-07-13") { (photoInfo) in
+        photoInfoController.fetchPhotoInfo(date: selectedDate) { (photoInfo) in
             if let photoInfo = photoInfo {
                 self.updateUI(with: photoInfo)
             }

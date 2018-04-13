@@ -18,40 +18,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="b" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0w-5q-xQJ">
-                                <rect key="frame" x="16" y="618" width="343" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jtx-qk-md1">
-                                <rect key="frame" x="16" y="20" width="343" height="440"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jtx-qk-md1">
+                                <rect key="frame" x="0.0" y="20" width="375" height="479"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="a" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1r0-W4-Tul">
-                                <rect key="frame" x="16" y="354" width="343" height="256"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fK-pJ-wTE">
-                                <rect key="frame" x="142" y="334" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Change Date"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fK-pJ-wTE" userLabel="Date Button">
+                                <rect key="frame" x="0.0" y="597" width="375" height="70"/>
+                                <color key="backgroundColor" red="1" green="0.84388989703176076" blue="0.68778295579398785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="UjC-KH-Mfa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="Date">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="changeDate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LYu-cA-zob"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UIV-qg-XKQ">
+                                <rect key="frame" x="0.0" y="497" width="375" height="100"/>
+                                <color key="backgroundColor" red="0.84197355115144523" green="0.93774732249492065" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Z1m-yM-gpK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="UIV-qg-XKQ" firstAttribute="top" secondItem="jtx-qk-md1" secondAttribute="bottom" id="7JP-xg-L3t"/>
+                            <constraint firstItem="9fK-pJ-wTE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="A8g-72-kCt"/>
+                            <constraint firstItem="UIV-qg-XKQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LPo-P6-Ai5"/>
+                            <constraint firstItem="jtx-qk-md1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="TyC-nO-WMN"/>
+                            <constraint firstItem="9fK-pJ-wTE" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Vbd-4n-iur"/>
+                            <constraint firstItem="jtx-qk-md1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zcr-f2-Bac"/>
+                            <constraint firstItem="UIV-qg-XKQ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="csd-lg-NaW"/>
+                            <constraint firstItem="jtx-qk-md1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jGw-63-L33"/>
+                            <constraint firstItem="9fK-pJ-wTE" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qsa-pU-usX"/>
+                            <constraint firstItem="9fK-pJ-wTE" firstAttribute="top" secondItem="UIV-qg-XKQ" secondAttribute="bottom" id="uuU-kv-Sv9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="copyrightLabel" destination="X0w-5q-xQJ" id="iWx-S7-0dN"/>
-                        <outlet property="descriptionLabel" destination="1r0-W4-Tul" id="RYr-iG-lcy"/>
+                        <outlet property="dateButton" destination="9fK-pJ-wTE" id="bqT-hw-NN0"/>
                         <outlet property="imageView" destination="jtx-qk-md1" id="fNG-ec-hNs"/>
+                        <outlet property="titleButton" destination="UIV-qg-XKQ" id="VrB-dI-ike"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
