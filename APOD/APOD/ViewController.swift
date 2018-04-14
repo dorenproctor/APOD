@@ -10,29 +10,54 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var copyrightLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleButton: UIButton!
     @IBOutlet var dateButton: UIButton!
-    
+//    @IBOutlet var descriptionLabel: UILabel!
+//    @IBOutlet var copyrightLabel: UILabel!
     
     let popoverViewController = UIViewController()
     let datePicker: UIDatePicker = UIDatePicker()
+    var info: PhotoInfo?
+    
+    @IBAction func showDetails(_ sender: UIButton) {
+        
+        let descriptionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height-50))
+        if let copyright = info!.copyright {
+            descriptionLabel.text = info!.description + "\n\nCopyright: " + copyright
+        } else {
+            descriptionLabel.text = info!.description
+        }
+        descriptionLabel.numberOfLines = 20
+        descriptionLabel.backgroundColor = .white
+        let doneButton = UIButton(frame: CGRect(x: 0, y: self.view.frame.height-50, width: self.view.frame.width, height: 50))
+        let swiftColor = UIColor(red: 93/255, green: 173/255, blue: 226/255, alpha: 1)
+        doneButton.backgroundColor = swiftColor
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.addTarget(self, action: #selector(cancelDate), for: .touchUpInside)
+        
+        let popoverView = UIView()
+        popoverView.backgroundColor = .red
+        
+        popoverView.addSubview(descriptionLabel)
+        popoverView.addSubview(doneButton)
+        
+        let popoverViewController = UIViewController()
+        popoverViewController.view = popoverView
+        popoverViewController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        popoverViewController.modalPresentationStyle = .popover
+        popoverViewController.preferredContentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+        popoverViewController.popoverPresentationController?.sourceView = sender // source button
+        popoverViewController.popoverPresentationController?.sourceRect = sender.bounds // source button bounds
+        
+        self.present(popoverViewController, animated: true, completion: nil)
+    }
+    
     
     @IBAction func changeDate(_ sender: UIButton) {
-        
-        // Position date picket within a view
-        datePicker.frame = CGRect(x: 10, y: self.view.frame.height-300, width: self.view.frame.width, height: 200)
-        
-        // Set some of UIDatePicker properties
+        datePicker.frame = CGRect(x: 0, y: self.view.frame.height-300, width: self.view.frame.width, height: 200)
         datePicker.backgroundColor = UIColor.white
         datePicker.datePickerMode = UIDatePickerMode.date
-        
-        // Add an event to call onDidChangeDate function when value is changed.
-//        datePicker.addTarget(self, action: #selector(ViewController.datePickerValueChanged(_:)), for: .valueChanged)
-        
-        
         
         let selectButton = UIButton(frame: CGRect(x: 0, y: self.view.frame.height-100, width: self.view.frame.width, height: 50))
         let swiftColor = UIColor(red: 93/255, green: 173/255, blue: 226/255, alpha: 1)
@@ -51,7 +76,6 @@ class ViewController: UIViewController {
         popoverView.addSubview(selectButton)
         popoverView.addSubview(cancelButton)
         
-        
         let popoverViewController = UIViewController()
         popoverViewController.view = popoverView
         popoverViewController.view.frame = CGRect(x: 0, y: 0, width: 320, height: 216)
@@ -60,11 +84,9 @@ class ViewController: UIViewController {
         popoverViewController.popoverPresentationController?.sourceView = sender // source button
         popoverViewController.popoverPresentationController?.sourceRect = sender.bounds // source button bounds
         
-        
         self.present(popoverViewController, animated: true, completion: nil)
-        
-        
     }
+    
     @objc func selectDate(sender: UIButton!) {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -80,25 +102,14 @@ class ViewController: UIViewController {
             }
         }
     }
+    
     @objc func cancelDate(sender: UIButton!) {
         self.dismiss(animated:true, completion: nil)
     }
-//    @objc func datePickerValueChanged(_ sender: UIDatePicker){
-//
-//        // Create date formatter
-//        let dateFormatter: DateFormatter = DateFormatter()
-//
-//        // Set date format
-//        dateFormatter.dateFormat = "yyyy/MM/dd"
-//
-//        // Apply date format
-//        let selectedDate: String = dateFormatter.string(from: sender.date)
-//
-//        print("Selected value \(selectedDate)")
-//    }
     
     
     func updateUI(with photoInfo: PhotoInfo) {
+        self.info = photoInfo
         guard let url = photoInfo.url.withHTTPS() else { return }
         let task = URLSession.shared.dataTask(with: url,
           completionHandler: { (data, response, error) in
@@ -109,7 +120,7 @@ class ViewController: UIViewController {
                     self.titleButton.setTitle(photoInfo.title, for: .normal)
                     self.imageView.image = image
 //                    self.descriptionLabel.text = photoInfo.description
-//                    print("title: ", photoInfo.title)
+////                    print("title: ", photoInfo.title)
 //                    if let copyright = photoInfo.copyright {
 //                        self.copyrightLabel.text = "Copyright \(copyright)"
 //                    } else {
