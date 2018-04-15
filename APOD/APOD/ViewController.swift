@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleButton: UIButton!
     @IBOutlet var dateButton: UIButton!
+    @IBOutlet var scrollView: UIScrollView!
     
     let popoverViewController = UIViewController()
     let datePicker: UIDatePicker = UIDatePicker()
@@ -105,6 +106,7 @@ class ViewController: UIViewController {
     
     
     func updateUI(with photoInfo: PhotoInfo) {
+        self.scrollView.zoomScale = 1.0
         self.info = photoInfo
         guard let url = photoInfo.url.withHTTPS() else { return }
         let task = URLSession.shared.dataTask(with: url,
@@ -122,6 +124,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrollView.minimumZoomScale = 0.4
+        scrollView.maximumZoomScale = 6.0
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let selectedDate: String = dateFormatter.string(from: Date())
@@ -132,6 +136,10 @@ class ViewController: UIViewController {
                 self.updateUI(with: photoInfo)
             }
         }
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
 
     override func didReceiveMemoryWarning() {
