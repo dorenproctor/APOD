@@ -26,10 +26,10 @@ struct PhotoInfo: Codable {
         self.description = try valueContainer.decode(String.self, forKey: Keys.description)
         self.url = try valueContainer.decode(URL.self, forKey: Keys.url)
         self.copyright = try? valueContainer.decode(String.self, forKey: Keys.copyright)
-        print("valueContainer: ", valueContainer)
-        print("title: ", self.title)
-        print("description :", self.description)
-        print("url: ", self.url)
-        print("copyright: ", self.copyright)
+//        print("valueContainer: ", valueContainer)
+//        print("title: ", self.title)
+//        print("description :", self.description)
+//        print("url: ", self.url)
+//        print("copyright: ", self.copyright ?? "")
     }
 }

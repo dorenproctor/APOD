@@ -6,7 +6,7 @@
 //  Copyright © 2018 Doren Proctor. All rights reserved.
 //
 
-import Foundation
+import UIKit
 class PhotoInfoController {
     func fetchPhotoInfo(date: String, completion: @escaping (PhotoInfo?) -> Void)
     {
@@ -15,7 +15,6 @@ class PhotoInfoController {
             "api_key": "IBcypJSuljZUGsIthbZ9X8bF9eQVXQvpebRombt4",
             "date": date
         ]
-        print(date)
         let url = baseURL.withQueries(query)!
         let task = URLSession.shared.dataTask(with: url) { (data,
             response, error) in
@@ -25,12 +24,18 @@ class PhotoInfoController {
                     jsonDecoder.decode(PhotoInfo.self, from: data) {
                 completion(photoInfo)
                 } else {
-                    print(String(data: data, encoding: .utf8))
-                    print("Data was not serialized.")
+                    let alert = UIAlertController(title: "Data was not serialized.", message: String(data: data, encoding: .utf8), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .`default`, handler: { _ in
+                    }))
+                UIApplication.shared.windows[0].rootViewController?.present(alert, animated: true, completion: nil)
                     completion(nil)
                 }
             } else {
                 print("No data was returned.")
+                let alert = UIAlertController(title: "No data was returned.", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .`default`, handler: { _ in
+                }))
+            UIApplication.shared.windows[0].rootViewController?.present(alert, animated: true, completion: nil)
                 completion(nil)
             }
         }

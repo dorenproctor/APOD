@@ -13,8 +13,6 @@ class ViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleButton: UIButton!
     @IBOutlet var dateButton: UIButton!
-//    @IBOutlet var descriptionLabel: UILabel!
-//    @IBOutlet var copyrightLabel: UILabel!
     
     let popoverViewController = UIViewController()
     let datePicker: UIDatePicker = UIDatePicker()
@@ -22,22 +20,22 @@ class ViewController: UIViewController {
     
     @IBAction func showDetails(_ sender: UIButton) {
         
-        let descriptionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height-50))
-        if let copyright = info!.copyright {
+        let descriptionLabel = UILabel(frame: CGRect(x: 20, y: 0, width: self.view.frame.width-40, height: self.view.frame.height-50))
+        if let copyright = info?.copyright {
             descriptionLabel.text = info!.description + "\n\nCopyright: " + copyright
         } else {
-            descriptionLabel.text = info!.description
+            descriptionLabel.text = info?.description
         }
-        descriptionLabel.numberOfLines = 20
-        descriptionLabel.backgroundColor = .white
+        descriptionLabel.numberOfLines = 30
+        let swiftColor = UIColor(red:1.00, green:0.98, blue:0.92, alpha:1.0)
+        descriptionLabel.backgroundColor = swiftColor
         let doneButton = UIButton(frame: CGRect(x: 0, y: self.view.frame.height-50, width: self.view.frame.width, height: 50))
-        let swiftColor = UIColor(red: 93/255, green: 173/255, blue: 226/255, alpha: 1)
-        doneButton.backgroundColor = swiftColor
+        doneButton.backgroundColor = .gray
         doneButton.setTitle("Done", for: .normal)
-        doneButton.addTarget(self, action: #selector(cancelDate), for: .touchUpInside)
+        doneButton.addTarget(self, action: #selector(closePopover), for: .touchUpInside)
         
         let popoverView = UIView()
-        popoverView.backgroundColor = .red
+        popoverView.backgroundColor = swiftColor
         
         popoverView.addSubview(descriptionLabel)
         popoverView.addSubview(doneButton)
@@ -68,7 +66,7 @@ class ViewController: UIViewController {
         let cancelButton = UIButton(frame: CGRect(x: 0, y: self.view.frame.height-50, width: self.view.frame.width, height: 50))
         cancelButton.backgroundColor = .gray
         cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelDate), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(closePopover), for: .touchUpInside)
         
         let popoverView = UIView()
         popoverView.backgroundColor = UIColor.clear
@@ -91,19 +89,17 @@ class ViewController: UIViewController {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let selectedDate: String = dateFormatter.string(from: datePicker.date)
-        
-        print("Selected value \(selectedDate)")
         dateButton.setTitle(selectedDate, for: .normal)
-        self.dismiss(animated:true, completion: nil)
         let photoInfoController = PhotoInfoController()
         photoInfoController.fetchPhotoInfo(date: selectedDate) { (photoInfo) in
             if let photoInfo = photoInfo {
                 self.updateUI(with: photoInfo)
             }
         }
+        self.dismiss(animated:true, completion: nil)
     }
     
-    @objc func cancelDate(sender: UIButton!) {
+    @objc func closePopover(sender: UIButton!) {
         self.dismiss(animated:true, completion: nil)
     }
     
@@ -116,16 +112,8 @@ class ViewController: UIViewController {
             if let data = data,
                 let image = UIImage(data: data) {
                 DispatchQueue.main.async {
-//                    self.title = photoInfo.title
                     self.titleButton.setTitle(photoInfo.title, for: .normal)
                     self.imageView.image = image
-//                    self.descriptionLabel.text = photoInfo.description
-////                    print("title: ", photoInfo.title)
-//                    if let copyright = photoInfo.copyright {
-//                        self.copyrightLabel.text = "Copyright \(copyright)"
-//                    } else {
-//                        self.copyrightLabel.isHidden = true
-//                    }
                 }
             }
         })
@@ -134,7 +122,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Date())
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let selectedDate: String = dateFormatter.string(from: Date())
